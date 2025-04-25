@@ -1,4 +1,4 @@
-package com.skillmentor.root.StudentDTO;
+package com.skillmentor.root.dto;
 
 public class StudentDTO {
 

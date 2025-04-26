@@ -5,6 +5,8 @@ import com.skillmentor.root.repository.StudentRepository;
 import com.skillmentor.root.service.StudentService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -18,5 +20,11 @@ public class StudentServiceImpl implements StudentService {
     public StudentDTO createStudent(StudentDTO studentDTO) {
         StudentDTO newStudent = studentRepository.createStudent(studentDTO);
         return newStudent;
+    }
+
+    @Override
+    public List<StudentDTO> getAllStudents() {
+        List<StudentDTO> allStudents = studentRepository.getAllStudents();
+        return allStudents;
     }
 }

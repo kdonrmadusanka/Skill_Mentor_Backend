@@ -17,4 +17,8 @@ public class StudentRepository {
         return studentDTO;
     }
 
+    public List<StudentDTO> getAllStudents(){
+        return students;
+    }
+
 }

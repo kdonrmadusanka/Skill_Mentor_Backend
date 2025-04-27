@@ -27,4 +27,10 @@ public class StudentServiceImpl implements StudentService {
         List<StudentDTO> allStudents = studentRepository.getAllStudents();
         return allStudents;
     }
+
+    @Override
+    public List<StudentDTO> getStudentsByAge(Integer age) {
+        List<StudentDTO> studentsByAge = studentRepository.getStudentsByAge(age);
+        return studentsByAge;
+    }
 }

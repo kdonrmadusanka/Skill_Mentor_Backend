@@ -30,4 +30,12 @@ public class StudentController {
         return new ResponseEntity<>(allStudents, HttpStatus.OK);
     }
 
+    @GetMapping("/id")
+    public ResponseEntity<List<StudentDTO>> getStudentsById(@RequestParam(required = false) Integer age){
+        List<StudentDTO> studentsById = studentService.getStudentsByAge(age);
+        return new ResponseEntity<>(studentsById, HttpStatus.OK);
+    }
+
+
+
 }

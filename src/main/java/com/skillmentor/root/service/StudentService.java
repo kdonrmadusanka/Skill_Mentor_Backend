@@ -12,4 +12,6 @@ public interface StudentService {
 
     public List<StudentDTO> getAllStudents();
 
+    public List<StudentDTO> getStudentsByAge(Integer age);
+
 }

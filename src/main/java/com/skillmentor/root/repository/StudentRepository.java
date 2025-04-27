@@ -21,4 +21,9 @@ public class StudentRepository {
         return students;
     }
 
+    public List<StudentDTO> getStudentsByAge(Integer age){
+        List<StudentDTO> studentsByAge = students.stream().filter(stu -> age == null || stu.getAge().equals(age)).toList();
+        return studentsByAge;
+    }
+
 }

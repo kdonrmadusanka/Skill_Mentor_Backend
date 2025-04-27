@@ -6,7 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v1/student")
@@ -30,12 +33,23 @@ public class StudentController {
         return new ResponseEntity<>(allStudents, HttpStatus.OK);
     }
 
-    @GetMapping("/id")
+    @GetMapping("/age")
     public ResponseEntity<List<StudentDTO>> getStudentsById(@RequestParam(required = false) Integer age){
         List<StudentDTO> studentsById = studentService.getStudentsByAge(age);
         return new ResponseEntity<>(studentsById, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getStudentById(@PathVariable String id){
+        Optional<StudentDTO> studentById = studentService.getStudentById(id);
 
+        if(studentById.isPresent()) {
+            return new ResponseEntity<>(studentById, HttpStatus.OK);
+        } else {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Student with id - '" + id + "' is not exists");
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

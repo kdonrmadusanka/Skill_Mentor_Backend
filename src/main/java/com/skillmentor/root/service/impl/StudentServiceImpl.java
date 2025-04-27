@@ -6,6 +6,7 @@ import com.skillmentor.root.service.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -32,5 +33,11 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDTO> getStudentsByAge(Integer age) {
         List<StudentDTO> studentsByAge = studentRepository.getStudentsByAge(age);
         return studentsByAge;
+    }
+
+    @Override
+    public Optional<StudentDTO> getStudentById(String id) {
+        Optional<StudentDTO> studentById = studentRepository.getStudentById(id);
+        return studentById;
     }
 }

@@ -40,4 +40,41 @@ public class StudentServiceImpl implements StudentService {
         Optional<StudentDTO> studentById = studentRepository.getStudentById(id);
         return studentById;
     }
+
+    @Override
+    public Optional<StudentDTO> updateStudent(String id, StudentDTO studentDTO) {
+        Optional<StudentDTO> searchStudent = getStudentById(id);
+
+        if (searchStudent.isPresent()){
+            StudentDTO updateStudent = searchStudent.get();
+            if (studentDTO.getFirstName() != null){
+                updateStudent.setFirstName(studentDTO.getFirstName());
+            }
+
+            if (studentDTO.getLastname()!= null){
+                updateStudent.setLastname(studentDTO.getLastname());
+            }
+
+            if (studentDTO.getAge() != null){
+                updateStudent.setAge(studentDTO.getAge());
+            }
+
+            if (studentDTO.getEmail() != null){
+                updateStudent.setEmail(studentDTO.getEmail());
+            }
+
+            if (studentDTO.getPhoneNumber() != null){
+                updateStudent.setPhoneNumber(studentDTO.getPhoneNumber());
+            }
+
+            if (studentDTO.getAddress() != null) {
+                updateStudent.setAddress(studentDTO.getAddress());
+            }
+
+            Optional<StudentDTO> updatedStudent = studentRepository.updateStudent(updateStudent);
+            return updatedStudent;
+        }
+        return Optional.empty();
+    }
+
 }

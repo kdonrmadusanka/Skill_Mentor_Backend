@@ -18,4 +18,6 @@ public interface StudentService {
 
     public Optional<StudentDTO> getStudentById(String id);
 
+    public Optional<StudentDTO> updateStudent(String id, StudentDTO studentDTO);
+
 }

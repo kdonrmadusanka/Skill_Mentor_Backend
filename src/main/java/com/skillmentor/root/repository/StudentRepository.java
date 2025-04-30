@@ -32,4 +32,14 @@ public class StudentRepository {
         return searchStudent;
     }
 
+    public Optional<StudentDTO> updateStudent(StudentDTO studentDTO){
+        for(int i = 0; i < students.size(); i++){
+            if(students.get(i).getStudentId().equals(studentDTO.getStudentId())){
+                students.set(i, studentDTO);
+                return Optional.ofNullable(students.get(i));
+            }
+        }
+        return Optional.empty();
+    }
+
 }

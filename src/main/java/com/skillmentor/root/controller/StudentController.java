@@ -45,11 +45,23 @@ public class StudentController {
 
         if(studentById.isPresent()) {
             return new ResponseEntity<>(studentById, HttpStatus.OK);
-        } else {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Student with id - '" + id + "' is not exists");
-            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Student with id - '" + id + "' is not exists");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO){
+        Optional<StudentDTO> updatedStudent = studentService.updateStudent(id, studentDTO);
+
+        if(updatedStudent.isPresent()){
+            return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
+        }
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "The student does not exist");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 }

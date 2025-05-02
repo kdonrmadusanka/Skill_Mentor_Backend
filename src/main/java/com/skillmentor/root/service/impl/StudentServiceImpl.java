@@ -77,4 +77,13 @@ public class StudentServiceImpl implements StudentService {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<StudentDTO> deleteStudent(String id) {
+        Optional<StudentDTO> deletedStudent = studentRepository.deleteStudent(id);
+        if(deletedStudent.isPresent()){
+            return deletedStudent;
+        }
+        return Optional.empty();
+    }
+
 }

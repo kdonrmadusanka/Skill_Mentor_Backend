@@ -20,4 +20,6 @@ public interface StudentService {
 
     public Optional<StudentDTO> updateStudent(String id, StudentDTO studentDTO);
 
+    public Optional<StudentDTO> deleteStudent(String id);
+
 }

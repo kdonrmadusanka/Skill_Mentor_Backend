@@ -3,6 +3,7 @@ package com.skillmentor.root.repository;
 import com.skillmentor.root.dto.StudentDTO;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +41,15 @@ public class StudentRepository {
             }
         }
         return Optional.empty();
+    }
+
+    public Optional<StudentDTO> deleteStudent(String id){
+       Optional<StudentDTO> deletedStudent = getStudentById(id);
+       if(deletedStudent.isPresent()){
+           students.remove(deletedStudent.get());
+           return deletedStudent;
+       }
+       return Optional.empty();
     }
 
 }

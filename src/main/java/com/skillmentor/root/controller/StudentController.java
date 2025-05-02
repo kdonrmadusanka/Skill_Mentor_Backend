@@ -64,4 +64,16 @@ public class StudentController {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteStudent(@PathVariable String id){
+        Optional<StudentDTO> deletedStudent = studentService.deleteStudent(id);
+
+        if(deletedStudent.isPresent()){
+            return new ResponseEntity<>(deletedStudent, HttpStatus.OK);
+        }
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "The student does not exist");
+        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    }
+
 }

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,15 +28,16 @@ public class StudentDAOImpl implements StudentDAO {
         PreparedStatement preparedStatement = null;
 
         try {
-            final String sql = "INSERT INTO student (first_name, last_name, email, phone_number, address, age) VALUES (?,?,?,?,?,?)";
+            final String sql = "INSERT INTO student (student_id ,first_name, last_name, email, phone_number, address, age) VALUES (?,?,?,?,?,?,?)";
             connection = databaseConnection.getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, studentDTO.getFirstName());
-            preparedStatement.setString(2, studentDTO.getLastname());
-            preparedStatement.setString(3, studentDTO.getEmail());
-            preparedStatement.setString(4, studentDTO.getPhoneNumber());
-            preparedStatement.setString(5, studentDTO.getAddress());
-            preparedStatement.setInt(6, studentDTO.getAge());
+            preparedStatement.setString(1,studentDTO.getStudentId());
+            preparedStatement.setString(2, studentDTO.getFirstName());
+            preparedStatement.setString(3, studentDTO.getLastname());
+            preparedStatement.setString(4, studentDTO.getEmail());
+            preparedStatement.setString(5, studentDTO.getPhoneNumber());
+            preparedStatement.setString(6, studentDTO.getAddress());
+            preparedStatement.setInt(7, studentDTO.getAge());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -50,7 +53,32 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public List<StudentDTO> getAllStudents() {
-        return List.of();
+        final List<StudentDTO> studentDTOS = new ArrayList<>();
+
+        final String sql = "SELECT * FROM student";
+        try(
+                Connection connection = databaseConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                ResultSet resultSet = preparedStatement.executeQuery(sql);
+            ) {
+            while(resultSet.next()) {
+                final StudentDTO studentDTO = new StudentDTO(
+                        resultSet.getString("student_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone_number"),
+                        resultSet.getString("address"),
+                        resultSet.getInt("age")
+                );
+                studentDTOS.add(studentDTO);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return studentDTOS;
+
     }
 
     @Override

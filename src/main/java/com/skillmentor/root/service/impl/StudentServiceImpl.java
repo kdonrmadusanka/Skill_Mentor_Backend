@@ -29,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDTO> getAllStudents() {
-        List<StudentDTO> allStudents = studentRepository.getAllStudents();
+        List<StudentDTO> allStudents = studentDAO.getAllStudents();
         return allStudents;
     }
 

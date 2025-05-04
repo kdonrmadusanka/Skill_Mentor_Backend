@@ -1,8 +1,10 @@
 package com.skillmentor.root.service.impl;
 
+import com.skillmentor.root.DAO.StudentDAO;
 import com.skillmentor.root.dto.StudentDTO;
 import com.skillmentor.root.repository.StudentRepository;
 import com.skillmentor.root.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,15 +13,17 @@ import java.util.Optional;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    StudentRepository studentRepository;
+    StudentDAO studentDAO;
 
-    public StudentServiceImpl(StudentRepository studentRepository){
-        this.studentRepository = studentRepository;
+    public StudentServiceImpl(StudentDAO studentDAO){
+        this.studentDAO = studentDAO;
     }
+    @Autowired
+    StudentRepository studentRepository;
 
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
-        StudentDTO newStudent = studentRepository.createStudent(studentDTO);
+        StudentDTO newStudent = studentDAO.createStudent(studentDTO);
         return newStudent;
     }
 

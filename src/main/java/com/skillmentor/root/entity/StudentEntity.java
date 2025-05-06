@@ -1,18 +1,31 @@
-package com.skillmentor.root.dto;
+package com.skillmentor.root.entity;
 
-public class StudentDTO {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-    private int objectId;
+@Entity
+@Table(name = "student")
+public class StudentEntity {
+
+    @Id
+    @Column(name = "student_id")
     private String studentId;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastname;
+    @Column(name = "email")
     private String email;
+    @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "address")
     private String address;
+    @Column(name = "age")
     private Integer age;
 
-    public StudentDTO(int objectId, String studentId, String firstName, String lastname, String email, String phoneNumber, String address, Integer age) {
-        this.objectId = objectId;
+    public StudentEntity(String studentId, String firstName, String lastname, String email, String phoneNumber, String address, Integer age) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastname = lastname;
@@ -20,14 +33,6 @@ public class StudentDTO {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.age = age;
-    }
-
-    public int getObjectId() {
-        return objectId;
-    }
-
-    public void setObjectId(int objectId) {
-        this.objectId = objectId;
     }
 
     public String getStudentId() {

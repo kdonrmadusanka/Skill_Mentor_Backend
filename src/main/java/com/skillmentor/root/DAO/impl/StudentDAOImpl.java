@@ -40,7 +40,8 @@ public class StudentDAOImpl implements StudentDAO {
             preparedStatement.setInt(7, studentDTO.getAge());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Log error details
+            throw new RuntimeException("Database error while creating student", e);
         } finally {
             try {
                 if(connection != null) connection.close();
@@ -60,9 +61,10 @@ public class StudentDAOImpl implements StudentDAO {
                 Connection connection = databaseConnection.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 ResultSet resultSet = preparedStatement.executeQuery(sql);
-            ) {
+        ) {
             while(resultSet.next()) {
                 final StudentDTO studentDTO = new StudentDTO(
+                        resultSet.getInt("object_id"),
                         resultSet.getString("student_id"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),

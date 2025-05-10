@@ -8,8 +8,10 @@ import com.skillmentor.root.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -24,24 +26,31 @@ public class StudentServiceImpl implements StudentService {
         return newStudent;
     }
 
-//    @Override
-//    public List<StudentDTO> getAllStudents() {
-//        List<StudentDTO> allStudents = studentDAO.getAllStudents();
-//        return allStudents;
-//    }
-//
-//    @Override
-//    public List<StudentDTO> getStudentsByAge(Integer age) {
-//        List<StudentDTO> studentsByAge = studentRepository.getStudentsByAge(age);
-//        return studentsByAge;
-//    }
-//
-//    @Override
-//    public Optional<StudentDTO> getStudentById(String id) {
-//        Optional<StudentDTO> studentById = studentRepository.getStudentById(id);
-//        return studentById;
-//    }
-//
+    @Override
+    public List<StudentEntity> getAllStudents() {
+        List<StudentEntity> allStudents = studentRepository.findAll();
+        return allStudents;
+    }
+
+    @Override
+    public List<StudentEntity> getStudentsByAge(Integer age) {
+        if(age == null){
+            return Collections.emptyList();
+        }
+        List<StudentEntity> allStudents = studentRepository.findAll();
+        List<StudentEntity> studentsByAge = allStudents.stream().filter(stu -> age.equals(stu.getAge())).collect(Collectors.toList());
+        return studentsByAge;
+    }
+
+    @Override
+    public StudentEntity getStudentById(Integer ObjectId) {
+        if(ObjectId == null){
+            return null;
+        }
+        Optional<StudentEntity> studentById = studentRepository.findById(ObjectId);
+        return studentById.orElse(null);
+    }
+
 //    @Override
 //    public Optional<StudentDTO> updateStudent(String id, StudentDTO studentDTO) {
 //        Optional<StudentDTO> searchStudent = getStudentById(id);

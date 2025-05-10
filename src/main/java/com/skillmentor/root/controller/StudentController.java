@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/student")
@@ -28,30 +27,30 @@ public class StudentController {
         return new ResponseEntity<>(newStudent, HttpStatus.OK);
     }
 
-//    @GetMapping()
-//    public ResponseEntity<List<StudentDTO>> getAllStudents(){
-//        List<StudentDTO> allStudents = studentService.getAllStudents();
-//        return new ResponseEntity<>(allStudents, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/age")
-//    public ResponseEntity<List<StudentDTO>> getStudentsById(@RequestParam(required = false) Integer age){
-//        List<StudentDTO> studentsById = studentService.getStudentsByAge(age);
-//        return new ResponseEntity<>(studentsById, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<?> getStudentById(@PathVariable String id){
-//        Optional<StudentDTO> studentById = studentService.getStudentById(id);
-//
-//        if(studentById.isPresent()) {
-//            return new ResponseEntity<>(studentById, HttpStatus.OK);
-//        }
-//        Map<String, String> errorResponse = new HashMap<>();
-//        errorResponse.put("error", "Student with id - '" + id + "' is not exists");
-//        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-//
-//    }
+    @GetMapping()
+    public ResponseEntity<List<StudentEntity>> getAllStudents(){
+        List<StudentEntity> allStudents = studentService.getAllStudents();
+        return new ResponseEntity<>(allStudents, HttpStatus.OK);
+    }
+
+    @GetMapping("/age")
+    public ResponseEntity<List<StudentEntity>> getStudentsById(@RequestParam(required = false) Integer age){
+        List<StudentEntity> studentsById = studentService.getStudentsByAge(age);
+        return new ResponseEntity<>(studentsById, HttpStatus.OK);
+    }
+
+    @GetMapping("/{ObjectId}")
+    public ResponseEntity<?> getStudentById(@PathVariable Integer ObjectId){
+        StudentEntity studentById = studentService.getStudentById(ObjectId);
+
+        if(studentById != null) {
+            return new ResponseEntity<>(studentById, HttpStatus.OK);
+        }
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Student with id - '" + ObjectId + "' is not exists");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+    }
 //
 //    @PutMapping("/{id}")
 //    public ResponseEntity<?> updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO){

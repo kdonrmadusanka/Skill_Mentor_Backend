@@ -1,27 +1,39 @@
-package com.skillmentor.root.dto;
+package com.skillmentor.root.entity;
 
-public class StudentDTO {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "Student")
+public class StudentEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer objectId;
+    @Column(name = "student_id")
     private String studentId;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "email")
     private String email;
+    @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "address")
     private String address;
+    @Column(name = "age")
     private Integer age;
 
-    public StudentDTO(String studentId, String firstName, String lastname, String email, String phoneNumber, String address, Integer age) {
+    public StudentEntity(String studentId, String firstName, String lastName, String email, String phoneNumber, String address, Integer age) {
         this.studentId = studentId;
         this.firstName = firstName;
-        this.lastName = lastname;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.age = age;
     }
 
-    public StudentDTO(){};
+    public StudentEntity(){};
 
     public Integer getObjectId() {
         return objectId;
@@ -51,8 +63,8 @@ public class StudentDTO {
         return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastName = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -86,4 +98,5 @@ public class StudentDTO {
     public void setAge(Integer age) {
         this.age = age;
     }
+
 }

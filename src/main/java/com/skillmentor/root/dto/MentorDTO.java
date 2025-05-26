@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -49,7 +51,9 @@ public class MentorDTO{
     @NotBlank(message = "Qualification must not be blank")
     @JsonProperty("qualification")
     private String qualification;
-    @NotNull(message = "Classroom ID must not be null")
-    @JsonProperty("class_room_id")
-    private Integer classRoomId;
+    @JsonProperty(value = "class_room", access = JsonProperty.Access.READ_ONLY)
+    private ClassRoomDTO classRoomDTO;
+    @JsonProperty(value = "session", access = JsonProperty.Access.READ_ONLY)
+    private List<SessionDTO> sessionDTO;
+
 }

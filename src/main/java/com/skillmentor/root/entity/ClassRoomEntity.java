@@ -1,5 +1,6 @@
 package com.skillmentor.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -37,5 +38,6 @@ public class ClassRoomEntity {
     private MentorEntity mentor;
     @OneToMany(mappedBy = "classRoomEntity", fetch = FetchType.EAGER)
     @Schema(description = "List of sessions associated with this classroom")
+    @JsonManagedReference
     private List<SessionEntity> sessionEntityList = new ArrayList<>();
 }

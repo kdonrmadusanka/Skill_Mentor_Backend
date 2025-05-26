@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +25,12 @@ public class ClassRoomDTO {
     @NotNull(message = "Enrolled student count must not be null")
     @JsonProperty("enrolled_student_count")
     private Integer enrolledStudentCount;
-    @JsonProperty("mentor")
+    @JsonProperty(value = "mentor", access = JsonProperty.Access.READ_ONLY)
     private MentorDTO mentorDTO;
+    @NotNull(message = "MentorId must not be null")
+    @JsonProperty(value = "mentor_id", access = JsonProperty.Access.WRITE_ONLY)
+    private Integer mentorId;
+    @JsonProperty(value = "session", access = JsonProperty.Access.READ_ONLY)
+    private List<SessionDTO> sessionDTOList;
 
 }

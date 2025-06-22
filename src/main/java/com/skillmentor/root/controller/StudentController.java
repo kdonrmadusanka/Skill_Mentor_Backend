@@ -2,7 +2,9 @@ package com.skillmentor.root.controller;
 
 import com.skillmentor.root.dto.StudentDTO;
 import com.skillmentor.root.entity.StudentEntity;
+import com.skillmentor.root.exception.StudentException;
 import com.skillmentor.root.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,65 +17,58 @@ import java.util.Map;
 @RequestMapping(value = "/student")
 public class StudentController {
 
-    public StudentService studentService;
+    @Autowired
+    private StudentService studentService;
 
-    public StudentController(StudentService studentService){
-        this.studentService = studentService;
-    }
-
-    @PostMapping()
-    public ResponseEntity<StudentEntity> createStudent(@RequestBody StudentDTO studentDTO){
-        StudentEntity newStudent = studentService.createStudent(studentDTO);
-        return new ResponseEntity<>(newStudent, HttpStatus.OK);
-    }
-
-    @GetMapping()
-    public ResponseEntity<List<StudentEntity>> getAllStudents(){
-        List<StudentEntity> allStudents = studentService.getAllStudents();
-        return new ResponseEntity<>(allStudents, HttpStatus.OK);
-    }
-
-    @GetMapping("/age")
-    public ResponseEntity<List<StudentEntity>> getStudentsById(@RequestParam(required = false) Integer age){
-        List<StudentEntity> studentsById = studentService.getStudentsByAge(age);
-        return new ResponseEntity<>(studentsById, HttpStatus.OK);
-    }
-
-    @GetMapping("/{ObjectId}")
-    public ResponseEntity<?> getStudentById(@PathVariable Integer ObjectId){
-        StudentEntity studentById = studentService.getStudentById(ObjectId);
-
-        if(studentById != null) {
-            return new ResponseEntity<>(studentById, HttpStatus.OK);
+    @PostMapping
+    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO studentDTO) {
+        try {
+            StudentDTO createdStudent = studentService.createStudent(studentDTO);
+            return new ResponseEntity<>(createdStudent, HttpStatus.CREATED); // 201 Created
+        } catch (StudentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "Student with id - '" + ObjectId + "' is not exists");
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-
     }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<?> updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO){
-//        Optional<StudentDTO> updatedStudent = studentService.updateStudent(id, studentDTO);
-//
-//        if(updatedStudent.isPresent()){
-//            return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
-//        }
-//        Map<String, String> errorResponse = new HashMap<>();
-//        errorResponse.put("error", "The student does not exist");
-//        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<?> deleteStudent(@PathVariable String id){
-//        Optional<StudentDTO> deletedStudent = studentService.deleteStudent(id);
-//
-//        if(deletedStudent.isPresent()){
-//            return new ResponseEntity<>(deletedStudent, HttpStatus.OK);
-//        }
-//        Map<String, String> errorResponse = new HashMap<>();
-//        errorResponse.put("error", "The student does not exist");
-//        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
-//    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable("id") Integer id) {
+        try {
+            StudentDTO studentDTO = studentService.getStudentById(id);
+            return new ResponseEntity<>(studentDTO, HttpStatus.OK);
+        } catch (StudentException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<StudentDTO> updateStudent(
+            @PathVariable("id") Integer id,
+            @RequestBody StudentDTO updatedStudentDTO) {
+        try {
+            StudentDTO updatedStudent = studentService.updateStudent(id, updatedStudentDTO);
+            return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
+        } catch (StudentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable("id") Integer id) {
+        try {
+            studentService.deleteStudent(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 on success, no content returned
+        } catch (StudentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 if student not found
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package com.skillmentor.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -17,7 +19,7 @@ import java.util.List;
 @Table(name = "student")
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentEntity {
+public class StudentEntity implements UserEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id")
@@ -43,5 +45,20 @@ public class StudentEntity {
     @Column(name = "age", nullable = false)
     private Integer age;
     @OneToMany(mappedBy = "studentEntity", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<SessionEntity> sessionEntityList = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
+    @JsonBackReference
+    private RoleEntity role;
+
+    @Override
+    public Integer getId() {
+        return studentId;
+    }
+
+    @Override
+    public RoleEntity getRole() {
+        return role;
+    }
 }

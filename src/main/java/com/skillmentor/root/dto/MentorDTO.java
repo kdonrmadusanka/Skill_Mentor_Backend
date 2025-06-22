@@ -55,5 +55,11 @@ public class MentorDTO{
     private ClassRoomDTO classRoomDTO;
     @JsonProperty(value = "session", access = JsonProperty.Access.READ_ONLY)
     private List<SessionDTO> sessionDTO;
+    @NotBlank(message = "Username must not be blank")
+    @JsonProperty("username")
+    private String username;
+    @NotBlank(message = "Password must not be blank")
+    @JsonProperty("password")
+    private String password;
 
 }

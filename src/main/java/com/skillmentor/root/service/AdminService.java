@@ -6,4 +6,6 @@ import com.skillmentor.root.entity.AdminEntity;
 
 public interface AdminService {
     public RegistrationResponseDTO createAdmin(AdminDTO adminDTO);
+
+    AdminDTO getAdminById(Integer id);
 }

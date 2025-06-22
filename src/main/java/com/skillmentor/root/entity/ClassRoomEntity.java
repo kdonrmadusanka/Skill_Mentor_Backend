@@ -32,11 +32,11 @@ public class ClassRoomEntity {
     @Column(name = "enrolled_student_count", nullable = false)
     @Schema(description = "Number of students enrolled", example = "30")
     private Integer enrolledStudentCount;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentor_id", referencedColumnName = "mentor_id")
     @Schema(description = "Mentor assigned to this classroom")
     private MentorEntity mentor;
-    @OneToMany(mappedBy = "classRoomEntity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "classRoomEntity", fetch = FetchType.LAZY)
     @Schema(description = "List of sessions associated with this classroom")
     @JsonManagedReference
     private List<SessionEntity> sessionEntityList = new ArrayList<>();

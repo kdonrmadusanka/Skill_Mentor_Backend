@@ -70,4 +70,9 @@ public class AdminServiceImpl implements AdminService {
         }
 
     }
+
+    @Override
+    public AdminDTO getAdminById(Integer id) {
+        return null;
+    }
 }

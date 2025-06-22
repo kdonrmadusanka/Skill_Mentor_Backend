@@ -66,6 +66,11 @@ public class GlobalExceptionHandler {
         return buildSimpleError(HttpStatus.NOT_FOUND, "Classroom error", ex.getMessage());
     }
 
+    @ExceptionHandler(AdminException.class)
+    public ResponseEntity<Map<String, Object>> handleClassroomException(AdminException ex) {
+        return buildSimpleError(HttpStatus.NOT_FOUND, "Classroom error", ex.getMessage());
+    }
+
     // Handle bad input arguments
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex) {
@@ -76,6 +81,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
         return buildSimpleError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", ex.getMessage());
+    }
+
+    @ExceptionHandler(JWTException.class)
+    public ResponseEntity<Map<String, Object>> handleJWTExceptionException(JWTException ex) {
+        return buildSimpleError(HttpStatus.NOT_FOUND, "Classroom error", ex.getMessage());
     }
 
     // === Helper Methods ===

@@ -1,5 +1,6 @@
 package com.skillmentor.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,16 +21,19 @@ public class SessionEntity {
     @Column(name = "session_id")
     private Integer sessionId;
     @NotNull(message = "Student must not be null")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false)
+    @JsonBackReference
     private StudentEntity studentEntity;
     @NotNull(message = "Classroom must not be null")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_room_id", referencedColumnName = "class_room_id", nullable = false)
+    @JsonBackReference
     private ClassRoomEntity classRoomEntity;
     @NotNull(message = "Mentor must not be null")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentor_id", referencedColumnName = "mentor_id", nullable = false)
+    @JsonBackReference
     private MentorEntity mentorEntity;
     @NotBlank(message = "Topic must not be blank")
     @Column(name = "topic", nullable = false)

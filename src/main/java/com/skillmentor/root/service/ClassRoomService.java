@@ -8,5 +8,9 @@ import org.springframework.stereotype.Service;
 public interface ClassRoomService {
     public ClassRoomDTO createClassRoom(ClassRoomDTO classRoomDTO);
 
-    public ClassRoomDTO getClassRoomById(String id);
+    public ClassRoomDTO getClassRoomById(Integer id);
+
+    public ClassRoomDTO updateClassRoom(Integer classRoomId, ClassRoomDTO updatedDTO);
+
+    public void deleteClassRoom(Integer classRoomId);
 }

@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,5 +37,13 @@ public class StudentDTO {
     @Min(value = 18, message = "Age must be at least 18")
     @JsonProperty("age")
     private Integer age;
+    @JsonProperty(value = "session", access = JsonProperty.Access.READ_ONLY)
+    private List<SessionDTO> sessionDTO;
+    @NotBlank(message = "Username must not be blank")
+    @JsonProperty("username")
+    private String username;
+    @NotBlank(message = "Password must not be blank")
+    @JsonProperty("password")
+    private String password;
 
 }

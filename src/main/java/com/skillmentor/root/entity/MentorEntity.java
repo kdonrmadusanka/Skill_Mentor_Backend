@@ -1,5 +1,7 @@
 package com.skillmentor.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -17,7 +19,7 @@ import java.util.List;
 @Table(name = "mentor")
 @NoArgsConstructor
 @AllArgsConstructor
-public class MentorEntity {
+public class MentorEntity implements UserEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mentor_id")
@@ -54,6 +56,21 @@ public class MentorEntity {
     @NotBlank(message = "Qualification must not be blank")
     @Column(name = "qualification", nullable = false)
     private String qualification;
-    @OneToMany(mappedBy = "mentorEntity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "mentorEntity", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<SessionEntity> sessionEntityList = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
+    @JsonBackReference
+    private RoleEntity role;
+
+    @Override
+    public Integer getId() {
+        return mentorId;
+    }
+
+    @Override
+    public RoleEntity getRole() {
+        return role;
+    }
 }
